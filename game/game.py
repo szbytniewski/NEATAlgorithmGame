@@ -2,15 +2,14 @@ import math
 import time
 
 import pygame
-
 from imgUtil import blit_rotate_center, scale_image
 
-GRASS = scale_image(pygame.image.load("game\images\grass.png"), 3)
-TRACK = scale_image(pygame.image.load("game\images\Track.png"), 2)
+GRASS = scale_image(pygame.image.load("C:/Users/zbyta/OneDrive/Pulpit/ReinforcmentTraningInAGame/game/images/Grass.png"), 3)
+TRACK = scale_image(pygame.image.load("C:/Users/zbyta/OneDrive/Pulpit/ReinforcmentTraningInAGame/game/images/Track.png"), 2)
 
-TRACK_BORDER = scale_image(pygame.image.load("game\images\outLine.png"), 2)
+TRACK_BORDER = scale_image(pygame.image.load("C:/Users/zbyta/OneDrive/Pulpit/ReinforcmentTraningInAGame/game/images/outLine.png"), 2)
 
-CAR = scale_image(pygame.image.load("game\images\car.png"), 1.5)
+CAR = scale_image(pygame.image.load("C:/Users/zbyta/OneDrive/Pulpit/ReinforcmentTraningInAGame/game/images/car.png"), 1.5)
 
 WIDTH, HEIGHT = TRACK.get_width(), TRACK.get_height()
 WIN = pygame.display.set_mode([WIDTH,HEIGHT])
@@ -41,6 +40,10 @@ class Car:
         self.vel = min(self.vel + self.acceleration, self.max_vel)
         self.move()
 
+    def move_backward(self):
+        self.vel = max(self.vel - self.acceleration, -self.max_vel/3)
+        self.move()
+
     def move(self):
         radians = math.radians(self.angle)
         vertical = math.cos(radians) * self.vel
@@ -49,13 +52,15 @@ class Car:
         self.y -= vertical
         self.x -= horizontal
 
+
+class PlayerCar(Car):
+    IMG = CAR
+    START_POS = (200,200)
+    
     def reduce_speed(self):
         self.vel = max(self.vel - self.acceleration / 2, 0)
         self.move()
 
-class PlayerCar(Car):
-    IMG = CAR
-    START_POS = (180, 200)
 
 def draw(win, images, player_car):
     for img, pos in images:
@@ -67,7 +72,7 @@ def draw(win, images, player_car):
 run=True
 clock = pygame.time.Clock()
 images = [(GRASS,(0,0)), (TRACK,(0,0)), (CAR, (0,0))]
-player_car = PlayerCar(4, 4)
+player_car = PlayerCar(8, 6)
 while run:
     clock.tick(FPS)
 
@@ -90,6 +95,9 @@ while run:
     if keys[pygame.K_w]:
         moved = True
         player_car.move_forward()
+    if keys[pygame.K_s]:
+        moved = True
+        player_car.move_backward()
 
     if not moved:
         player_car.reduce_speed()
