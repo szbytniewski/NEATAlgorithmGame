@@ -66,6 +66,8 @@ class ComputerCar(Car):
         return [
             self.vel,
             self.angle,
+            self.x,
+            self.y,
             self.get_distance_to_border('left'),
             self.get_distance_to_border('right'),
             self.get_distance_to_finish()
