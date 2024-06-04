@@ -21,3 +21,6 @@ def load_images():
         "FINISH_POSITION": FINISH_POSITION,
         "CAR": CAR
     }
+
+
+# This function loads all images and returns a dictionary.
