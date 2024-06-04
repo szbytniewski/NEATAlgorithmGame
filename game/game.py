@@ -20,8 +20,7 @@ WIDTH, HEIGHT = TRACK.get_width(), TRACK.get_height()
 WIN = pygame.display.set_mode([WIDTH,HEIGHT])
 pygame.display.set_caption("Game")
 
-FPS = 120
-
+FPS = 60
 def draw(win, images, player_car):
     for img, pos in images:
         win.blit(img, pos)
