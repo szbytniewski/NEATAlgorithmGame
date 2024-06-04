@@ -31,15 +31,19 @@ def eval_genomes(genomes, config):
     nets = []
     ge = []
 
+    # Creating nearual networks and cars 
     for genome_id, genome in genomes:
         net = neat.nn.FeedForwardNetwork.create(genome, config)
         nets.append(net)
-        cars.append(ComputerCar(4, 4, CAR_IMG))
+        cars.append(ComputerCar(4, 4, CAR_IMG, WIN_WIDTH, WIN_HEIGHT, TRACK_BORDER_MASK))
         genome.fitness = 0
         ge.append(genome)
 
+    start_time = time.time()
     run = True
-    while run:
+
+    # If the time is longer than 30 we stop the generation so that it doesn't go for eternity
+    while run and time.time() - start_time < 30:
         clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -48,9 +52,11 @@ def eval_genomes(genomes, config):
                 quit()
 
         for i, car in enumerate(cars):
+            # calcualte choice in the network
             output = nets[i].activate(car.get_data())
             choice = output.index(max(output))
 
+            # Pick a choice
             if choice == 0:
                 car.rotate(left=True)
             elif choice == 1:
@@ -58,18 +64,24 @@ def eval_genomes(genomes, config):
 
             car.move_forward()
 
+            # If the car hits a wall :(
             if car.collide(TRACK_BORDER_MASK) is not None:
-                ge[i].fitness -= 50
+                ge[i].fitness -= 10
                 cars.pop(i)
                 nets.pop(i)
                 ge.pop(i)
                 continue
 
+            # If the car gets to the finish :)
             if car.collide(FINISH_MASK, *FINISH_POSITION) is not None:
-                ge[i].fitness += 3000
-                car.reset(car.START_POS)
+                ge[i].fitness += 500 # Fitness given just for finishing
+                ge[i].fitness += 1000 / (time.time() - start_time) # Fitness given for finishing as fast as possible
+                cars.pop(i)
+                nets.pop(i)
+                ge.pop(i)
+                continue
 
-            ge[i].fitness += car.vel
+            ge[i].fitness += car.vel / 10 # Idea is to give fitness to cars for going as fast as they can
 
         if not cars:
             run = False
@@ -78,12 +90,14 @@ def eval_genomes(genomes, config):
         draw_window(win, cars, [(images["GRASS"], (0, 0)), (images["TRACK"], (0, 0)), (images["FINISH"], FINISH_POSITION), (images["TRACK_BORDER"], (0, 0))])
 
 def run(config_file):
+    # This whole function is all about starting the confg.txt file that contain all the info we need for the NEAT algorithm
     config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction, neat.DefaultSpeciesSet, neat.DefaultStagnation, config_file)
     p = neat.Population(config)
 
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
+    # Every 10 generations we mkae a checkpoint
     p.add_reporter(neat.Checkpointer(10))
 
     winner = p.run(eval_genomes, 50)

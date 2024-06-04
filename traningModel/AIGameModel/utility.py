@@ -9,26 +9,5 @@ def scale_image(img, factor):
     size = round(img.get_width() * factor), round(img.get_height() * factor)
     return pygame.transform.scale(img, size)
 
-def draw(win, images, player_car):
-    for img, pos in images:
-        win.blit(img, pos)
-    player_car.draw(win)
-    pygame.display.update()
-
-def move_player(player_car):
-    keys = pygame.key.get_pressed()
-    moved = False
-
-    if keys[pygame.K_a]:
-        player_car.rotate(left=True)
-    if keys[pygame.K_d]:
-        player_car.rotate(right=True)
-    if keys[pygame.K_w]:
-        moved = True
-        player_car.move_forward()
-    if keys[pygame.K_s]:
-        moved = True
-        player_car.move_backward()
-
-    if not moved:
-        player_car.reduce_speed()
+# This file contains all function that have a purpose of making 
+# things easier in a longer run like image scaling 

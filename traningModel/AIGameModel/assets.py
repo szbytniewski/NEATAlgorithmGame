@@ -9,7 +9,7 @@ def load_images():
     FINISH = pygame.image.load("C:/Users/Zbyta/Desktop/Studia/semestr_4/ReinforcmentTraningInAGame/game/images/imgs/finish.png")
     FINISH_MASK = pygame.mask.from_surface(FINISH)
     FINISH_POSITION = (130, 250)
-    CAR = scale_image(pygame.image.load("C:/Users/zbyta/OneDrive/Pulpit/ReinforcmentTraningInAGame/game/images/car.png"), 1.8)
+    CAR = scale_image(pygame.image.load("C:/Users/zbyta/OneDrive/Pulpit/ReinforcmentTraningInAGame/game/images/car.png"), 1)
 
     return {
         "GRASS": GRASS,
@@ -21,3 +21,6 @@ def load_images():
         "FINISH_POSITION": FINISH_POSITION,
         "CAR": CAR
     }
+
+
+# This function loads all images and returns a dictionary.
