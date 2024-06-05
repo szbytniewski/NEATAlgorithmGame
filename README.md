@@ -42,7 +42,7 @@ When you start the game you will be presented with a game menu.
 Pressing Exit will close the app, while pressing Start will allow you to pick a model you want to play against.
 ![pickScreen](documentationsImgs\pickScreen.png)
 Pressing one of the images will start the game and will allow you to play against 1 of the 2 pre-trained models (You can probably realize which one is the better model if you have any knowledge about formula 1).
-![gameScreen](documentationsImgs\gameScreen.png)
+![gameScreen](https://github.com/szbytniewski/ReinforcmentTraningInAGame/blob/351bf826832895babe2d5608d943a7f49fb1f895/documentationsImgs/gameScreen.png)
 Above is an image of how the game looks. The images for the track and track outline were taken from this youtube video description https://www.youtube.com/watch?v=L3ktUWfAMPg&t as well as some of the basic code needed for the game.
 The controls for the player car are as follows:
 
