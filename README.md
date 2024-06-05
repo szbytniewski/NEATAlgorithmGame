@@ -38,9 +38,9 @@ Project contains 3 folders:
 ## Game Mechanics
 
 When you start the game you will be presented with a game menu.
-![startScreen](documentationsImgs\startScreen.png)
+![startScreen](https://github.com/szbytniewski/ReinforcmentTraningInAGame/blob/17f5e2ff6baeb6dfdf45671bac14056059ee61fd/documentationsImgs/startScreen.png)
 Pressing Exit will close the app, while pressing Start will allow you to pick a model you want to play against.
-![pickScreen](documentationsImgs\pickScreen.png)
+![pickScreen](https://github.com/szbytniewski/ReinforcmentTraningInAGame/blob/17f5e2ff6baeb6dfdf45671bac14056059ee61fd/documentationsImgs/pickScreen.png)
 Pressing one of the images will start the game and will allow you to play against 1 of the 2 pre-trained models (You can probably realize which one is the better model if you have any knowledge about formula 1).
 ![gameScreen](https://github.com/szbytniewski/ReinforcmentTraningInAGame/blob/351bf826832895babe2d5608d943a7f49fb1f895/documentationsImgs/gameScreen.png)
 Above is an image of how the game looks. The images for the track and track outline were taken from this youtube video description https://www.youtube.com/watch?v=L3ktUWfAMPg&t as well as some of the basic code needed for the game.
@@ -57,7 +57,7 @@ In the left down corner you have a counter of current laps count. To win the gam
 
 The model has 7 inputs 5 for rays/pointers which allow them to observe their surrounding, and 2 more inputs for their velocity and angle, while having 8 outputs. The model can make 2 choices turn left or turn right(0 and 1). If you look into the config file you will see the numer of outputs equals 8. It is 8 because during intense traning 2 outputs made the model traning very slow since and inefficient and while playing around I relised that it was doing better when the ammount fo outputs was larger.
 
-![traningScreen](documentationsImgs\traningScreen.png)
+![traningScreen](https://github.com/szbytniewski/ReinforcmentTraningInAGame/blob/17f5e2ff6baeb6dfdf45671bac14056059ee61fd/documentationsImgs/traningScreen.png)
 Above you can see an example of how the ai is trained. On the picture you can see a few cars, each car has 5 rays pointing into 5 diffrent directions(2 to their sides, 1 to the front, and 2 in-between the front and the sides). This allows them to adapt based on how far they are from the track's walls. As for rewarding the cars there are a few options. The first one is given for reaching the finish line which adds 500 to their fitness score, it is made this way since it should be a big achievement for a car to reach finish line. Next rewarding system is given for reaching the finish line the fastest as possible which is `1000 / (time.time() - start_time)`. The last positive rewards is for the distance which is the smallest and calculated as `car.vel / 10` the reason for this kind of small reward is so that they cars get awarded for moving which will be usefull for the version where car has full control but it is small becuase otherwise the car will try to strafe as much as possible in order to travel the most distance. The negative reward is for hitting the wall which is made so that the car aboid hitting the walls and slowing down.
 
 ## Conclusion/Results
